@@ -1,0 +1,28 @@
+services:
+  # 1. FastAPI Backend Service
+  - type: web
+    name: neurotriage-backend
+    runtime: python
+    buildCommand: "pip install -r backend/requirements.txt"
+    startCommand: "uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DEMO_MODE
+        value: "true"
+
+  # 2. Next.js Frontend Service
+  - type: web
+    name: neurotriage-frontend
+    runtime: node
+    rootDir: frontend
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm run start"
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.0
+      - key: BACKEND_URL
+        fromService:
+          name: neurotriage-backend
+          type: web
+          property: host
