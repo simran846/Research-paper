@@ -26,11 +26,12 @@ uploads/*
 
 # Environment variables
 .env
-backend/.env
-frontend/.env.local
-frontend/.env.development.local
-frontend/.env.test.local
-frontend/.env.production.local
+.env.*
+!.env.example
+backend/.env*
+!backend/.env.example
+frontend/.env*
+!frontend/.env.example
 
 # Logs
 *.log
